@@ -14,10 +14,8 @@ class UCameraComponent;
 class USInteractionComponent;
 class UMaterialInterface;
 class USAttributeComponent;
-class USkeletalMeshComponent;
 class ASWeapon;
-class UMySkeletalMeshComponent;
-	
+
 UCLASS()
 class DBGA_API ASCharacter : public ACharacter
 {
@@ -45,6 +43,11 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DBGA|Attributes")
 	TObjectPtr<USAttributeComponent> AttributeComponent;
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DBGA|Weapon")
+	TObjectPtr<ASWeapon> WeaponComponent;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DBGA|Weapon")
+	TObjectPtr<USkeletalMeshComponent> WeaponMesh;
 
 public:	
 	// Called every frame
@@ -84,8 +87,6 @@ private:
 	UPROPERTY();
 	TSubclassOf<ASSpell> SpellClass;
 
-	
-
 private:
 	void OnAttack();
 	void UpdateSupportingSpellDecal(float SpellDistance, float SpellRadius, UMaterialInterface* DecalComponentMaterial);
@@ -96,26 +97,4 @@ public:
 private:
 	TObjectPtr<UDecalComponent> SupportingSpellDecalComponent;
 	int32 CurrentSpellIndex;
-
-
-
-/*public:
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	bool AttachWeapon();
-	*/
-public:
-	/*UPROPERTY();
-	TSubclassOf<ASWeapon> WeaponClass;
-	*/
-	//UPROPERTY(EditDefaultsOnly, Category = "DBGA|weapon")
-	//TObjectPtr<UMySkeletalMeshComponent> MeshGun;
-	UPROPERTY();
-	TSubclassOf<ASWeapon> WeaponClass;
-
-	UPROPERTY()
-	TObjectPtr<ASWeapon> Weapon;
-
-	
-
-	
 };

@@ -12,8 +12,6 @@
 #include "SAreaSpell.h"
 #include "SGravitySpell.h"
 #include "SAttributeComponent.h"
-#include "SWeaponSpell.h"
-#include "MySkeletalMeshComponent.h"
 #include "SWeapon.h"
 
 
@@ -47,7 +45,11 @@ ASCharacter::ASCharacter()
 	InteractionComponent = CreateDefaultSubobject<USInteractionComponent>(TEXT("Interaction Component"));
 	AttributeComponent = CreateDefaultSubobject<USAttributeComponent>(TEXT("AttributeComponent"));
 	
-
+	WeaponComponent = CreateDefaultSubobject<ASWeapon>(TEXT("ASWeapon"));
+	//WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Weapon Mesh"));
+	
+	
+	// USpringArmComponent
 	CameraBoom->bUsePawnControlRotation = true;
 
 	// dal ACharacter
@@ -58,14 +60,13 @@ ASCharacter::ASCharacter()
 
 	CurrentSpellIndex = 0;
 
-	
 }
 
 // Called when the game starts or when spawned
 void ASCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	USAnimInstance* AnimInstance = Cast<USAnimInstance>(GetMesh()->GetAnimInstance());
 	if (AnimInstance)
 	{
@@ -78,47 +79,28 @@ void ASCharacter::BeginPlay()
 	AttributeComponent->OnManaChanged.AddDynamic(this, &ASCharacter::OnManaChanged);
 
 	OnTakeRadialDamage.AddDynamic(this, &ASCharacter::OnRadialDamage);
-	
-	
-	
-	UWorld* World = GetWorld();
-	check(World);
 
-		static const FName GunSocket = "hand_r_gun_socket";
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.Owner = this;
+	SpawnParams.Instigator = GetInstigator();
 
-		const FVector SpawnLocation = GetMesh()->GetSocketLocation(GunSocket);
-		const FRotator SpawnRotationn = GetControlRotation();
-
-		const FTransform SpawnTM = FTransform(SpawnRotationn, SpawnLocation);
-
-		FActorSpawnParameters SpawnParams;
-		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		SpawnParams.Instigator = this;
-
-		World->GetWorld()->SpawnActor<ASWeapon>(ASWeapon::StaticClass(), SpawnLocation, SpawnRotationn, SpawnParams);
-
-
-		//USkeletalMeshComponent* MeshGun = GetMesh();
-
-
-		//Weapon->AttachToComponent(MeshGun, FAttachmentTransformRules::SnapToTargetIncludingScale, GunSocket);
-		/*if (Weapon)
+	if (WeaponComponent)
+	{
+		WeaponComponent->Attach(this);
+		UE_LOG(LogTemp, Warning, TEXT("ATTACHED?"));
+	}
+	/*
+	ASWeapon* Weapon = GetWorld()->SpawnActor<ASWeapon>(ASWeapon::StaticClass(), SpawnParams);
+	if (Weapon)
+	{
+		if (GetMesh()->DoesSocketExist("hand_r_spell_socket"))
 		{
-			USkeletalMeshComponent* Mesh = GetMesh();
-			if (Mesh)
-			{
-				Weapon->AttachToComponent(Mesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, GunSocket);
-			}
-		}*/
-		
-	
-	
-	
+			Weapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName(TEXT("hand_r_spell_socket")));
+			WeaponComponent = Weapon;
+		}
+	}
+	*/
 
-	// Attach the weapon to the Character
-	//FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, true);
-	//AttachToActor(Weapon, AttachmentRules, GunSocket);
-	
 }
 
 
@@ -155,8 +137,6 @@ void ASCharacter::Tick(float DeltaTime)
 			}
 		}
 	}
-	
-	
 
 #if WITH_EDITOR
 
@@ -207,9 +187,7 @@ void ASCharacter::OnNotifyBegin(FName NotifyName, const FBranchingPointNotifyPay
 	if (NotifyName == Cast_Shoot)
 	{
 		OnAttack();
-		
 	}
-
 }
 
 void ASCharacter::OnAttack()
@@ -230,24 +208,6 @@ void ASCharacter::OnAttack()
 
 	World->SpawnActor<ASSpell>(SpellClass, SpawnTM, SpawnParams);
 }
-
-/*bool ASCharacter::AttachWeapon()
-{
-	ASCharacter* Character;
-
-	// Check that the character is valid, and has no weapon component yet
-	if (Character == nullptr || Character->GetInstanceComponents().FindItemByClass<ASCharacter>())
-	{
-		return false;
-	}
-
-	// Attach the weapon to the Character
-	FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, true);
-	AttachToComponent(Character->GetMesh(), AttachmentRules, FName(TEXT("hand_r_gun_socket")));
-	return true;
-}*/
-
-
 
 void ASCharacter::UpdateSupportingSpellDecal(float SpellDistance, float SpellRadius, UMaterialInterface* DecalComponentMaterial)
 {
@@ -343,4 +303,3 @@ void ASCharacter::OnRadialDamage(AActor* DamagedActor, float Damage, const class
 {
 	AttributeComponent->ApplyHealthChange(DamageCauser, Damage);
 }
-

@@ -6,14 +6,13 @@
 #include "GameFramework/Actor.h"
 #include "SWeapon.generated.h"
 
-class UMySkeletalMeshComponent;
-class USphereComponent;
-
 UCLASS()
 class DBGA_API ASWeapon : public AActor
 {
 	GENERATED_BODY()
-	
+public:
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "DBGA| Weapon")
+	TObjectPtr<USkeletalMeshComponent> WeaponMesh;
 public:	
 	// Sets default values for this actor's properties
 	ASWeapon();
@@ -26,19 +25,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-public:
-	/*UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "DBGA|Gun")
-	TObjectPtr<USkeletalMeshComponent> MeshGun;
-	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "DBGA|Gun")
-	TObjectPtr<UStaticMeshComponent> Mesh;
-	*/
-	//UPROPERTY(EditDefaultsOnly)
-	//TObjectPtr<UMySkeletalMeshComponent> WeaponComponents;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "DBGA|Gun")
-	TObjectPtr<USkeletalMeshComponent> MeshGun;
-protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "DBGA|Spell")
-	TObjectPtr<USphereComponent> CollisionComponent;
+	UFUNCTION(BlueprintCallable, Category = "DBGA|Weapon")
+	void ToggleVisibility();
 
+	UFUNCTION(BlueprintCallable, Category = "DBGA|Weapon")
+	void Attach(ASCharacter* Parent);
+	
 };

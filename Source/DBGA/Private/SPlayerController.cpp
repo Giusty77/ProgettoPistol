@@ -8,6 +8,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "InputMappingContext.h"
+#include "SWeapon.h"
 
 
 void ASPlayerController::SetupInputComponent()
@@ -172,14 +173,11 @@ void ASPlayerController::OnSpell4ActionInput(const FInputActionValue& Value)
 
 void ASPlayerController::OnSpell5ActionInput(const FInputActionValue& Value)
 {
-	if (ControlledCharacter)
-	{
-		ControlledCharacter->SetCurrentSpellIndex(4);
-		
-		
-		
-		
-	}
+	UE_LOG(LogTemp, Warning, TEXT("Pressed 5"));
 
-	
+	if (ControlledCharacter && ControlledCharacter->WeaponComponent)
+	{
+		ControlledCharacter->WeaponComponent->ToggleVisibility();
+		UE_LOG(LogTemp, Warning, TEXT("Visibility Weapon"));
+	}
 }

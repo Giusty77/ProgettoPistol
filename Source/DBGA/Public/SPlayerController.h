@@ -72,6 +72,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "DBGA|Input")
 	TObjectPtr<UInputAction> Spell5ActionInput;
 
+
 protected:
 	UFUNCTION(BlueprintCallable, Category = "DBGA|Input")
 	void OnMoveActionInput(const FInputActionValue& Value);
@@ -99,7 +100,7 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = "DBGA|Input")
 	void OnSpell4ActionInput(const FInputActionValue& Value);
-
+	
 	UFUNCTION(BlueprintCallable, Category = "DBGA|Input")
 	void OnSpell5ActionInput(const FInputActionValue& Value);
 };
