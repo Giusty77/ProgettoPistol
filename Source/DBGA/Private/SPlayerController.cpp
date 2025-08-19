@@ -144,6 +144,7 @@ void ASPlayerController::OnSpell1ActionInput(const FInputActionValue& Value)
 	if (ControlledCharacter)
 	{
 		ControlledCharacter->SetCurrentSpellIndex(0);
+		OnSpellCast.Broadcast(0);
 	}
 }
 
@@ -152,6 +153,7 @@ void ASPlayerController::OnSpell2ActionInput(const FInputActionValue& Value)
 	if (ControlledCharacter)
 	{
 		ControlledCharacter->SetCurrentSpellIndex(1);
+		OnSpellCast.Broadcast(1);
 	}
 }
 
@@ -160,6 +162,7 @@ void ASPlayerController::OnSpell3ActionInput(const FInputActionValue& Value)
 	if (ControlledCharacter)
 	{
 		ControlledCharacter->SetCurrentSpellIndex(2);
+		OnSpellCast.Broadcast(2);
 	}
 }
 
@@ -168,6 +171,7 @@ void ASPlayerController::OnSpell4ActionInput(const FInputActionValue& Value)
 	if (ControlledCharacter)
 	{
 		ControlledCharacter->SetCurrentSpellIndex(3);
+		OnSpellCast.Broadcast(3);
 	}
 }
 
@@ -178,6 +182,7 @@ void ASPlayerController::OnSpell5ActionInput(const FInputActionValue& Value)
 		if (ControlledCharacter->GetCurrentSpellIndex() != 4)
 		{
 			ControlledCharacter->SetCurrentSpellIndex(4);
+			OnSpellCast.Broadcast(4);
 			// set weapon visibility to true since it's false at the start		
 			ControlledCharacter->WeaponComponent->SetVisibility(true);
 		}

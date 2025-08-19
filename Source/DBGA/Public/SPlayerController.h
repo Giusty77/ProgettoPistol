@@ -11,6 +11,7 @@
 if (InputAction == nullptr) { UE_LOG(LogTemp, Warning, TEXT("InputAction is not set!")); } \
 else { EnchangedInputController->BindAction(InputAction, TriggerEvent, this, &ASPlayerController::On##InputAction); }
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSpellCast, int32, SpellIndex);
 
 class ASCharacter;
 class UEnhancedInputComponent;
@@ -31,7 +32,9 @@ class DBGA_API ASPlayerController : public APlayerController
 protected:
 	virtual void SetupInputComponent() override;
 	virtual void OnPossess(APawn* InPawn) override;
-
+public:
+	UPROPERTY(BlueprintAssignable)
+	FOnSpellCast OnSpellCast;
 protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "DBGA|Character")
 	TObjectPtr<ASCharacter> ControlledCharacter;
