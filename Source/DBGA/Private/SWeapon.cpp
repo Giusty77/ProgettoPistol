@@ -38,6 +38,8 @@ void ASWeapon::ToggleVisibility()
 void ASWeapon::Attach(ASCharacter* Parent)
 {
 	this->WeaponMesh = Parent->WeaponMesh;
+	//set the weapon invisible at first
+	this->WeaponMesh->SetVisibility(false);
 	TObjectPtr<USkeletalMeshComponent> ParentMesh = Parent->GetMesh();
 	if (WeaponMesh && !WeaponMesh->IsAttachedTo(ParentMesh))
 	{

@@ -180,4 +180,10 @@ void ASPlayerController::OnSpell5ActionInput(const FInputActionValue& Value)
 		ControlledCharacter->WeaponComponent->ToggleVisibility();
 		UE_LOG(LogTemp, Warning, TEXT("Visibility Weapon"));
 	}
+
+	if (GEngine)
+	{
+		FString DebugMessage = FString::Printf(TEXT("PRESSING 5"));
+		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 2.0f, FColor::Emerald, DebugMessage);
+	}
 }
