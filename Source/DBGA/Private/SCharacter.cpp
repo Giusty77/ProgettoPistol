@@ -276,6 +276,11 @@ void ASCharacter::SetCurrentSpellIndex(int32 NewSpellIndex)
 	SpellClass = SpellClasses[CurrentSpellIndex];
 }
 
+int32 ASCharacter::GetCurrentSpellIndex()
+{
+	return CurrentSpellIndex;
+}
+
 void ASCharacter::OnHealthChanged(AActor* InstigatorActor, USAttributeComponent* OwningComponent, float NewValue, float DeltaValue)
 {
 #if WITH_EDITOR

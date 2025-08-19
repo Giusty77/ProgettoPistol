@@ -30,9 +30,9 @@ void ASWeapon::Tick(float DeltaTime)
 }
 
 
-void ASWeapon::ToggleVisibility()
+void ASWeapon::SetVisibility(bool isVisible)
 {
-	WeaponMesh->ToggleVisibility();
+	WeaponMesh->SetVisibility(isVisible);
 
 	
 }

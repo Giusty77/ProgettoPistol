@@ -173,24 +173,13 @@ void ASPlayerController::OnSpell4ActionInput(const FInputActionValue& Value)
 
 void ASPlayerController::OnSpell5ActionInput(const FInputActionValue& Value)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Pressed 5"));
-
 	if (ControlledCharacter && ControlledCharacter->WeaponComponent)
 	{
-		ControlledCharacter->WeaponComponent->ToggleVisibility();
-		UE_LOG(LogTemp, Warning, TEXT("Visibility Weapon"));
-
-		if (ControlledCharacter->WeaponComponent->GetVisibility())
+		if (ControlledCharacter->GetCurrentSpellIndex() != 4)
 		{
 			ControlledCharacter->SetCurrentSpellIndex(4);
+			// set weapon visibility to true since it's false at the start		
+			ControlledCharacter->WeaponComponent->SetVisibility(true);
 		}
 	}
-
-	if (GEngine)
-	{
-		FString DebugMessage = FString::Printf(TEXT("PRESSING 5"));
-		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 2.0f, FColor::Emerald, DebugMessage);
-	}
-
-	
 }

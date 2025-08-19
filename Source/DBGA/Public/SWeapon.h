@@ -26,7 +26,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable, Category = "DBGA|Weapon")
-	void ToggleVisibility();
+	void SetVisibility(bool isVisible);
 
 	UFUNCTION(BlueprintCallable, Category = "DBGA|Weapon")
 	void Attach(ASCharacter* Parent);

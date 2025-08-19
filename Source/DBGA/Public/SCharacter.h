@@ -65,6 +65,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "DBGA|Character")
 	void SetCurrentSpellIndex(int32 NewSpellIndex);
+	
+	UFUNCTION(BlueprintCallable, Category = "DBGA|Character")
+	int32 GetCurrentSpellIndex();
 
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "DBGA|Animation")
