@@ -33,6 +33,8 @@ void ASWeapon::Tick(float DeltaTime)
 void ASWeapon::ToggleVisibility()
 {
 	WeaponMesh->ToggleVisibility();
+
+	
 }
 
 void ASWeapon::Attach(ASCharacter* Parent)
@@ -52,4 +54,10 @@ void ASWeapon::Attach(ASCharacter* Parent)
 	} else 
 		UE_LOG(LogTemp, Warning, TEXT("NOT ATTACHED"));
 	
+}
+
+bool ASWeapon::GetVisibility()
+{
+	bool IsVisible = WeaponMesh->GetVisibleFlag();
+	return IsVisible;
 }

@@ -179,6 +179,11 @@ void ASPlayerController::OnSpell5ActionInput(const FInputActionValue& Value)
 	{
 		ControlledCharacter->WeaponComponent->ToggleVisibility();
 		UE_LOG(LogTemp, Warning, TEXT("Visibility Weapon"));
+
+		if (ControlledCharacter->WeaponComponent->GetVisibility())
+		{
+			ControlledCharacter->SetCurrentSpellIndex(4);
+		}
 	}
 
 	if (GEngine)
@@ -186,4 +191,6 @@ void ASPlayerController::OnSpell5ActionInput(const FInputActionValue& Value)
 		FString DebugMessage = FString::Printf(TEXT("PRESSING 5"));
 		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 2.0f, FColor::Emerald, DebugMessage);
 	}
+
+	
 }

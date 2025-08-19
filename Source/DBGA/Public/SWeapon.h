@@ -31,4 +31,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "DBGA|Weapon")
 	void Attach(ASCharacter* Parent);
 	
+	UFUNCTION(BlueprintCallable, Category = "DBGA|Weapon")
+	bool GetVisibility();
 };
